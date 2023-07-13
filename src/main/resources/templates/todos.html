@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{css/todos.css}" rel="stylesheet">
+  <title>ToDo List</title>
+</head>
+<body>
+<h1 th:class="'h1title'">ToDo List</h1>
+<div th:class="'todoContainer'">
+  <div th:class="'todoForm'">
+    <form th:action="@{/todos}" method="post">
+      <input th:class="'todoInput'" type="text" name="description" placeholder="Enter your task description.. "
+             required/>
+      <button th:class="'todoButton'" type="submit">add task</button>
+    </form>
+  </div>
+
+  <div th:class="'todoListContainer'">
+    <ul>
+      <li th:class="'todoItem'" th:each="todo:${toDoList}">
+        <span th:class="'task'" th:text="${todo.getDescription()}"></span>
+        <a th:class="'editButton'" th:href="@{/todos/edit/{id}(id=${todo.id})}">✎</a>
+        <form th:action="@{/todos/delete}" th:method="POST">
+            <input type="hidden" name="id" th:value="${toDoList.indexOf(todo)}">
+            <button th:class="'deleteButton'">✖</button>
+          </form>
+      </li>
+    </ul>
+
+  </div>
+
+</div>
+</body>
+</html>
